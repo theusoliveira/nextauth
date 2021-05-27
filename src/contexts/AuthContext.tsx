@@ -12,17 +12,17 @@ type User = {
 type SignInCredentials = {
   email: string;
   password: string;
-}
+};
 
 type AuthContextData = {
   signIn(credencials: SignInCredentials): Promise<void>;
   user: User;
   isAuthenticated: boolean;
-}
+};
 
 type AuthProviderProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 export const AuthContext = createContext({} as AuthContextData);
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps): ReactElement {
   const [user, setUser] = useState<User>(null);
   const isAuthenticated = !!user;
 
-  async function signIn({ email, password } : SignInCredentials) {
+  async function signIn({ email, password }: SignInCredentials) {
     try {
       const response = await api.post('sessions', {
         email,
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: AuthProviderProps): ReactElement {
 
       Router.push('/dashboard');
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -61,5 +61,5 @@ export function AuthProvider({ children }: AuthProviderProps): ReactElement {
     <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
